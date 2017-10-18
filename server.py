@@ -74,7 +74,10 @@ def render_template():
         if error:
             return jsonify(**{'error': error}), 400
     finally:
-        container.remove(force=True)
+        try:
+            container.remove(force=True)
+        except NameError:
+            pass
 
     content = play['tasks'][1]['hosts']['localhost']['content']
     return jsonify(**{'content': base64.b64decode(content)})
