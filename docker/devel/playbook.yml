@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: template
+      template:
+        src: /template.j2
+        dest: /template.out
+
+    - name: slurp
+      slurp:
+        path: /template.out

@@ -1,0 +1,2 @@
+docker==2.5.1
+flask-lambda==0.0.4
