@@ -45,28 +45,38 @@ def render_template():
 
     client = docker.from_env()
     try:
-        stdout = client.containers.run(
+        container = client.containers.create(
             "ansible-template-ui",
             environment={
                 'TEMPLATE': base64.b64encode(data['template']),
                 'VARIABLES': base64.b64encode(data['variables'] or '{}')
             },
-            stdout=True,
-            stderr=False,
-            detach=False,
-            remove=True,
             mem_limit='96m',
         )
+        container.start()
     except Exception as e:
-        return jsonify(**{'error': e.stderr}), 400
-
-    try:
-        data = json.loads(stdout)
-    except Exception as e:
-        print stdout
+        app.logger.exception('Failed to create and start container')
         return jsonify(**{'error': str(e)}), 400
+    else:
+        exit_status = container.wait()
+        stdout = container.logs(stdout=True, stderr=False)
+        stderr = container.logs(stdout=False, stderr=True)
+        error = None
+        try:
+            response = json.loads(stdout)
+        except ValueError:
+            app.logger.exception('Could not parse JSON')
+            error = stderr or 'Unknown Error'
+        else:
+            play = response['plays'][0]
+            if exit_status != 0:
+                error = play['tasks'][-1]['hosts']['localhost']['msg']
+        if error:
+            return jsonify(**{'error': error}), 400
+    finally:
+        container.remove(force=True)
 
-    content = data['plays'][0]['tasks'][1]['hosts']['localhost']['content']
+    content = play['tasks'][1]['hosts']['localhost']['content']
     return jsonify(**{'content': base64.b64decode(content)})
 
 
