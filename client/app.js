@@ -23,7 +23,7 @@
                 $scope.rendered = '';
                 $scope.error = '';
                 $http.post(
-                    '/render',
+                    'render',
                     {
                         variables: $scope.variables,
                         template: $scope.template
