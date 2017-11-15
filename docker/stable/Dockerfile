@@ -3,7 +3,7 @@ MAINTAINER Matt Martz <matt@sivel.net>
 
 RUN apk add -U python2 py-pip openssl-dev python2-dev libffi-dev ca-certificates gcc make musl-dev git
 
-RUN pip install ansible
+RUN pip install ansible jmespath
 
 COPY execute.sh /execute.sh
 COPY hosts /hosts
