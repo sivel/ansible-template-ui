@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright 2017 Matt Martz
+# Copyright 2017-2018 Matt Martz
 # All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -14,6 +14,8 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
+
+__version__ = '1.0.0'
 
 import base64
 import json
@@ -29,8 +31,10 @@ kwargs = {}
 app_path = os.path.dirname(__file__)
 kwargs.update({
     'static_url_path': '',
-    'static_folder': os.path.join(os.path.abspath(app_path),
-                                  'client')
+    'static_folder': os.path.join(
+        os.path.abspath(app_path),
+        'client'
+    )
 })
 
 app = FlaskLambda(__name__, **kwargs)
