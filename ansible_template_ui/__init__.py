@@ -23,6 +23,8 @@ import os
 
 import docker
 
+from . import text
+
 from flask_lambda import FlaskLambda
 from flask import request, jsonify
 
@@ -38,6 +40,8 @@ kwargs.update({
 })
 
 app = FlaskLambda(__name__, **kwargs)
+
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
@@ -48,12 +52,32 @@ def render_template():
     data = request.get_json()
 
     client = docker.from_env()
+
+    repository, tag = docker.utils.parse_repository_tag(
+        os.getenv('DOCKER_IMAGE', 'sivel/ansible-template-ui')
+    )
+
+    if not tag:
+        tag = data.get('tag', 'latest')
+
+    image = '%s:%s' % (repository, tag)
+
     try:
+        client.images.pull(repository, tag=tag)
+
         container = client.containers.create(
-            "ansible-template-ui",
+            image,
             environment={
-                'TEMPLATE': base64.b64encode(data['template']),
-                'VARIABLES': base64.b64encode(data['variables'] or '{}')
+                'TEMPLATE': text.native(
+                    base64.b64encode(
+                        text.b(data['template'])
+                    )
+                ),
+                'VARIABLES': text.native(
+                    base64.b64encode(
+                        text.b(data['variables']) or b'{}'
+                    )
+                ),
             },
             mem_limit='96m',
         )
@@ -83,5 +107,7 @@ def render_template():
         except NameError:
             pass
 
-    content = play['tasks'][1]['hosts']['localhost']['content']
-    return jsonify(**{'content': base64.b64decode(content)})
+    b64_content = play['tasks'][1]['hosts']['localhost']['content']
+    content = text.native(base64.b64decode(b64_content))
+
+    return jsonify(**{'content': content})

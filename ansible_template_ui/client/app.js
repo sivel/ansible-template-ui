@@ -1,5 +1,5 @@
 (function() {
-    ngApp = angular.module('ngApp', ['blockUI']);
+    ngApp = angular.module('ngApp', ['blockUI', 'ui.bootstrap']);
 
     ngApp.controller('mainController', [
         '$scope',
@@ -19,14 +19,16 @@
                 $scope.render();
             }
 
-            $scope.render = function() {
+            $scope.render = function(tag) {
+                var tag = tag || 'latest';
                 $scope.rendered = '';
                 $scope.error = '';
                 $http.post(
                     'render',
                     {
                         variables: $scope.variables,
-                        template: $scope.template
+                        template: $scope.template,
+                        tag: tag,
                     }
                 ).then(
                     function(response) {
