@@ -3,21 +3,39 @@ Web UI for testing ansible templates
 
 ## Docker Container
 
+### Pull
+
 ```
-docker build -t ansible-template-ui docker/devel
+docker pull sivel/ansible-template-ui:devel
 ```
 
-## Running
+### Build
+
+```
+docker build -t ansible-template-ui:devel docker/devel
+```
+
+## Web App
 
 ### Dev
 
 ```
-python server.py
+python -m ansible_template_ui
 ```
 
 ### Production
 
+#### PEX
+
+```
+pip install pex
+./build_pex.sh
+ansible_template_ui.pex -k gevent ansible_template_ui:app
+```
+
+#### Without PEX
+
 ```
 pip install gevent gunicorn
-gunicorn -k gevent server:app
+gunicorn -k gevent ansible_template_ui:app
 ```

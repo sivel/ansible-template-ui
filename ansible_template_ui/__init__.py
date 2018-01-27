@@ -85,7 +85,3 @@ def render_template():
 
     content = play['tasks'][1]['hosts']['localhost']['content']
     return jsonify(**{'content': base64.b64decode(content)})
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
