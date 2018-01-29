@@ -100,7 +100,7 @@ def render_template():
             if exit_status != 0:
                 error = play['tasks'][-1]['hosts']['localhost']['msg']
         if error:
-            return jsonify(**{'error': error}), 400
+            return jsonify(**{'error': text.native(error)}), 400
     finally:
         try:
             container.remove(force=True)
