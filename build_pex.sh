@@ -1,3 +1,3 @@
 #!/bin/bash
-
-pex -o ansible_template_ui.pex -r pex-requirements.txt -f ./dist -m 'gunicorn.app.wsgiapp:run' --python-shebang='#!/usr/bin/env python'
+python setup.py sdist
+pex -o ansible_template_ui.pex -r deploy-requirements.txt -r pex-requirements.txt -f ./dist -m 'gunicorn.app.wsgiapp:run' --python-shebang='#!/usr/bin/env python'

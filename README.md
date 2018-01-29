@@ -36,6 +36,6 @@ ansible_template_ui.pex -k gevent ansible_template_ui:app
 #### Without PEX
 
 ```
-pip install gevent gunicorn
+pip install -r requirements.txt -r deploy-requirements.txt
 gunicorn -k gevent ansible_template_ui:app
 ```
