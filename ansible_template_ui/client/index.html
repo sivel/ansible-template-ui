@@ -24,8 +24,9 @@
                     max-width: 1024px;
                 }
             }
-            .form-control {
+            .form-control, pre {
                 font-family: monospace;
+                font-size: 14px;
             }
         </style>
     </head>
@@ -55,7 +56,7 @@
                 </div>
                 <div ng-show="rendered">
                     <label>Rendered</label>
-                    <pre><code>{{ rendered }}</code></pre>
+                    <pre>{{ rendered }}</pre>
                 </div>
             </div>
             <div class="col-lg-6">
