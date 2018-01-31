@@ -7,4 +7,4 @@ export ANSIBLE_RETRY_FILES_ENABLED=0
 echo $VARIABLES | base64 -d > /variables.yml
 echo $TEMPLATE | base64 -d > /template.j2
 
-timeout -t 3 -s KILL ansible-playbook -i hosts -e @variables.yml playbook.yml
+timeout -t 5 -s KILL ansible-playbook -i hosts -e @variables.yml playbook.yml
