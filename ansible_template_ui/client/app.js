@@ -13,21 +13,29 @@
 
             $scope.templateExample = '{{ foo }}';
 
+            $scope.raw = false;
+
             $scope.sample = function() {
                 $scope.variables = 'foo: bar';
                 $scope.template = $scope.templateExample;
+                $scope.raw = false;
                 $scope.render();
             }
 
             $scope.render = function(tag) {
                 var tag = tag || 'latest';
+                if ($scope.raw) {
+                    var template = '{{ ' + $scope.template + ' }}';
+                } else {
+                    var template = $scope.template;
+                }
                 $scope.rendered = '';
                 $scope.error = '';
                 $http.post(
                     'render',
                     {
                         variables: $scope.variables,
-                        template: $scope.template,
+                        template: template,
                         tag: tag,
                     }
                 ).then(
