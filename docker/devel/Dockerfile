@@ -6,10 +6,10 @@ COPY execute.sh /execute.sh
 COPY playbook.yml /playbook.yml
 
 RUN set -x && \
-    apk add -U python3 py3-pip openssl-dev python3-dev libffi-dev ca-certificates gcc make musl-dev git && \
+    apk add -U python3 py3-pip openssl-dev python3-dev libffi-dev ca-certificates gcc make musl-dev git yaml-dev && \
     pip3 install -U pip && \
     pip3 install https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base jmespath netaddr && \
-    apk del openssl-dev python2-dev libffi-dev gcc make musl musl-dev git
+    apk del openssl-dev python2-dev libffi-dev gcc make musl musl-dev git yaml yaml-dev pkgconf
 
 RUN set -x && \
     ansible-galaxy collection install --pre \
