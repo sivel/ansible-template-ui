@@ -8,7 +8,7 @@ COPY playbook.yml /playbook.yml
 RUN set -x && \
     apk add -U python3 py3-pip openssl-dev python3-dev libffi-dev ca-certificates gcc make musl-dev git yaml-dev && \
     pip3 install -U pip && \
-    pip3 install https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base jmespath netaddr && \
+    pip3 install https://github.com/ansible/ansible/archive/devel.tar.gz jmespath netaddr && \
     apk del openssl-dev python2-dev libffi-dev gcc make musl musl-dev git yaml pkgconf
 
 RUN set -x && \
@@ -29,6 +29,7 @@ RUN set -x && \
         cisco.iosxr \
         cisco.meraki \
         cisco.mso \
+        cisco.nso \
         cisco.nxos \
         cisco.ucs \
         cloudscale_ch.cloud \
@@ -36,26 +37,35 @@ RUN set -x && \
         community.azure \
         community.crypto \
         community.digitalocean \
+        community.docker \
         community.general \
         community.grafana \
+        community.hrobot \
         community.kubernetes \
         community.libvirt \
         community.mongodb \
         community.mysql \
         community.network \
+        community.okd \
+        community.postgresql \
         community.proxysql \
         community.rabbitmq \
+        community.routeros \
+        community.skydive \
         community.vmware \
         community.windows \
         community.zabbix \
         containers.podman \
         cyberark.conjur \
         cyberark.pas \
-        dellemc_networking.os10 \
+        dellemc.os10 \
+        dellemc.os6 \
+        dellemc.os9 \
         f5networks.f5_modules \
         fortinet.fortimanager \
         fortinet.fortios \
         frr.frr \
+        gluster.gluster \
         google.cloud \
         hetzner.hcloud \
         ibm.qradar \
@@ -76,7 +86,6 @@ RUN set -x && \
         purestorage.flasharray \
         purestorage.flashblade \
         servicenow.servicenow \
-        skydive.skydive \
         splunk.es \
         theforeman.foreman \
         vyos.vyos \
