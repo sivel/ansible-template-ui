@@ -55,24 +55,30 @@
                               ng-trim="false"
                               placeholder="{{ templateExample }}"></textarea>
                 </div>
-                <div ng-show="rendered">
-                    <label>Rendered</label>
-                    <pre>{{ rendered }}</pre>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="btn-group" uib-dropdown ng-show="template">
+                            <button id="split-button" class="btn btn-primary" type="button" ng-click="render()">Render</button>
+
+                            <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                                <li role="menuitem"><a href="#" ng-click="render()">Devel</a></li>
+                                <li role="menuitem"><a href="#" ng-click="render('stable')">Stable</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="btn-group" uib-dropdown ng-show="template">
-                    <button id="split-button" class="btn btn-primary" type="button" ng-click="render()">Render</button>
-
-                    <button type="button" class="btn btn-primary" uib-dropdown-toggle>
-                        <span class="caret"></span>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-
-                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
-                        <li role="menuitem"><a href="#" ng-click="render()">Devel</a></li>
-                        <li role="menuitem"><a href="#" ng-click="render('stable')">Stable</a></li>
-                    </ul>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div ng-show="rendered">
+                            <label>Rendered</label>
+                            <pre>{{ rendered }}</pre>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
