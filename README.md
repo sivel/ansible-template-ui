@@ -6,13 +6,13 @@ Web UI for testing ansible templates
 ### Pull
 
 ```
-docker pull sivel/ansible-template-ui:devel
+docker pull sivel/ansible-template-ui:latest
 ```
 
 ### Build
 
 ```
-docker build -t ansible-template-ui:devel docker/devel
+docker build -t ansible-template-ui:latest docker/devel
 ```
 
 ## Web App
